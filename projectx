@@ -1,0 +1,461 @@
+package Coursework;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author tm4375t
+ */
+
+public class AllNotes extends CommonCode {
+    
+
+    private CommonCode CC = new CommonCode();
+    public ArrayList<Note> allNotes = new ArrayList<>();
+    public int max = 0;
+    private String crse = "";
+    Iterable<String> getAllNotes;
+
+    public AllNotes() {
+        readAllNotes();
+    }
+
+        private void readAllNotes() {
+            ArrayList<String> readNotes = new ArrayList<>();
+            readNotes = CC.readTextFile(CC.appDir + "/Notes.txt");
+            System.out.println(readNotes.get(0));
+            
+            if ("File not found".equals(readNotes.get(0))) {
+                System.out.println("File has been created");
+            } 
+            
+            
+            else {
+                    allNotes.clear();
+                    for (String str : readNotes) {
+                            String[] tmp = str.split("\t");
+                    Note n = new Note();
+                    n.setNoteID(Integer.parseInt(tmp[0]));
+                    n.setCourse(tmp[1]);
+                    n.setDayte(tmp[2]);
+                    n.setNote(tmp[3]);
+                    allNotes.add(n);        	
+                    }
+            }
+        }
+
+    protected String getENotes(String c) {// Get Note by each course        
+        String txtNotes = "";
+        ArrayList<String> readNotes = new ArrayList<>();
+        readNotes = CC.readTextFile(CC.appDir + "/Notes.txt");
+            for (String str : readNotes) {
+                String[] tmp = str.split("\t");        
+                Note n = new Note();
+                n.setNoteID(Integer.parseInt(tmp[0]));
+                n.setCourse(tmp[1]);
+                n.setDayte(tmp[2]);
+                n.setNote(tmp[3]);
+
+                if (c.equals(n.getCourse())) 
+                     txtNotes += n.getNote() + "\n";   
+            }
+        return txtNotes;    
+    }
+
+
+        protected int readNoteSize() {
+            ArrayList<String> readNotes = new ArrayList<>();
+            readNotes = CC.readTextFile(CC.appDir + "/Notes.txt");
+            int nsize = readNotes.size();
+            if ("File not found".equals(readNotes.get(0))) {
+                    return 0;
+                } 
+                else {
+                    return nsize;
+                }
+        }
+
+ 
+    public int getMaxID() { 
+    int maxID = allNotes.size(); 
+    maxID++;
+    return maxID;
+	
+}
+
+public void addNote(int maxID, String course , String note) { 
+	Note myNote = new Note(maxID, course, note);
+	allNotes.add(myNote);
+    writeAllNotes();	
+}
+
+
+
+public String searchAllNotesByKeyword(String noteList, String s) { 
+	int i = 0;
+	while (i < allNotes.size() ) 
+	{
+		if (allNotes.get(i).getNote().contains(s)) {
+			noteList += allNotes.get(i).getNote()+ "\n";
+		}
+        i++;
+	}
+       if (noteList.equals(""))
+           return "No results !!";
+       else
+           
+	return noteList;
+       
+} 
+    public ArrayList<Note> getAllNotes() {
+            return allNotes;
+    }
+    
+    
+
+    private void writeAllNotes() {
+        
+        
+        String path = CC.appDir + "/Notes.txt";
+        ArrayList<String> writeNote = new ArrayList<>();
+        for (Note n : allNotes) {
+            String tmp = n.getNoteID() + "\t";
+            tmp += n.getCourse() + "\t";
+            tmp += n.getDayte() + "\t";
+            tmp += n.getNote(); 
+            tmp += "\r";
+            writeNote.add(tmp);
+        }
+        try {
+            CC.writeTextFile(path, writeNote);
+        } 
+        catch (IOException ex) {
+            System.out.println("");
+        }
+    }
+
+}
+
+
+
+
+package Coursework;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author tm4375t
+ */
+
+public class AllNotes extends CommonCode {
+    
+
+    private CommonCode CC = new CommonCode();
+    public ArrayList<Note> allNotes = new ArrayList<>();
+    public int max = 0;
+    private String crse = "";
+    Iterable<String> getAllNotes;
+
+    public AllNotes() {
+        readAllNotes();
+    }
+
+        private void readAllNotes() {
+            ArrayList<String> readNotes = new ArrayList<>();
+            readNotes = CC.readTextFile(CC.appDir + "/Notes.txt");
+            System.out.println(readNotes.get(0));
+            
+            if ("File not found".equals(readNotes.get(0))) {
+                System.out.println("File has been created");
+            } 
+            
+            
+            else {
+                    allNotes.clear();
+                    for (String str : readNotes) {
+                            String[] tmp = str.split("\t");
+                    Note n = new Note();
+                    n.setNoteID(Integer.parseInt(tmp[0]));
+                    n.setCourse(tmp[1]);
+                    n.setDayte(tmp[2]);
+                    n.setNote(tmp[3]);
+                    allNotes.add(n);        	
+                    }
+            }
+        }
+
+    protected String getENotes(String c) {// Get Note by each course        
+        String txtNotes = "";
+        ArrayList<String> readNotes = new ArrayList<>();
+        readNotes = CC.readTextFile(CC.appDir + "/Notes.txt");
+            for (String str : readNotes) {
+                String[] tmp = str.split("\t");        
+                Note n = new Note();
+                n.setNoteID(Integer.parseInt(tmp[0]));
+                n.setCourse(tmp[1]);
+                n.setDayte(tmp[2]);
+                n.setNote(tmp[3]);
+
+                if (c.equals(n.getCourse())) 
+                     txtNotes += n.getNote() + "\n";   
+            }
+        return txtNotes;    
+    }
+
+
+        protected int readNoteSize() {
+            ArrayList<String> readNotes = new ArrayList<>();
+            readNotes = CC.readTextFile(CC.appDir + "/Notes.txt");
+            int nsize = readNotes.size();
+            if ("File not found".equals(readNotes.get(0))) {
+                    return 0;
+                } 
+                else {
+                    return nsize;
+                }
+        }
+
+ 
+    public int getMaxID() { 
+    int maxID = allNotes.size(); 
+    maxID++;
+    return maxID;
+	
+}
+
+public void addNote(int maxID, String course , String note) { 
+	Note myNote = new Note(maxID, course, note);
+	allNotes.add(myNote);
+    writeAllNotes();	
+}
+
+
+
+public String searchAllNotesByKeyword(String noteList, String s) { 
+	int i = 0;
+	while (i < allNotes.size() ) 
+	{
+		if (allNotes.get(i).getNote().contains(s)) {
+			noteList += allNotes.get(i).getNote()+ "\n";
+		}
+        i++;
+	}
+       if (noteList.equals(""))
+           return "No results !!";
+       else
+           
+	return noteList;
+       
+} 
+    public ArrayList<Note> getAllNotes() {
+            return allNotes;
+    }
+    
+    
+
+    private void writeAllNotes() {
+        
+        
+        String path = CC.appDir + "/Notes.txt";
+        ArrayList<String> writeNote = new ArrayList<>();
+        for (Note n : allNotes) {
+            String tmp = n.getNoteID() + "\t";
+            tmp += n.getCourse() + "\t";
+            tmp += n.getDayte() + "\t";
+            tmp += n.getNote(); 
+            tmp += "\r";
+            writeNote.add(tmp);
+        }
+        try {
+            CC.writeTextFile(path, writeNote);
+        } 
+        catch (IOException ex) {
+            System.out.println("");
+        }
+    }
+
+}
+
+
+
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Coursework;
+
+/**
+ *
+ * @author tm4375t
+ */
+public class Note extends CommonCode {
+    public int noteID = 0;
+    public String course = "";
+    public String dayte = "";
+    public String note = "";
+    private CommonCode CC = new CommonCode();
+
+    Note() {
+    }
+
+  
+    private void storeThisNote() {
+        System.out.println("storeThisNote not coded yet.");
+    }
+    
+    public Note(int nid, String crs, String dt, String nt) {
+        setNoteID(nid);
+        setCourse(crs);
+        setDayte(dt);
+        setNote(nt);
+    }
+    public Note(int max, String crs, String nt) {
+        setNoteID(max);
+        setCourse(crs);
+        setDayte();
+        setNote(nt);
+    }
+    
+    public void setNoteID(int n) {
+        int nid = n;
+        // Any validation goes here.
+        noteID = nid;
+    }
+    public void setCourse(String c) {
+        String crse = c;
+        // Any validation goes here.
+        course = crse;
+    }
+    public int getNoteID() {
+        // Any checking goes here.
+        return noteID;
+    }
+    public String getCourse() {
+        // Any checking goes here.
+        return course;
+    }
+    public void setDayte() {
+        dayte = orderedDate;
+    }
+    public void setDayte(String d) {
+        dayte = d;
+    }
+    public String getDayte() {
+        return dayte;
+    }
+    public void setNote(String n) {
+        // Any validation goes here.
+        note = n;
+    }
+    public String getNote() {
+        // Any checking goes here.
+        return note;
+    }
+
+
+}
+
+
+
+
+
+
+ /*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Coursework;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author tm4375t
+ * 
+ */
+public class CourseworkItem extends CommonCode {
+    
+private CommonCode cc = new CommonCode();
+    ArrayList<String> course = new ArrayList<>();
+    String path = cc.appDir + "/Courses.txt";
+    AllNotes allnotes = new AllNotes();
+    
+    void writeCourseList(String a) {        
+        ArrayList<String> readCourses = new ArrayList<>();
+        readCourses = cc.readTextFile(cc.appDir + "/Courses.txt");  
+        if ("File not found".equals(readCourses.get(0))) {
+            System.out.println("File not found");
+        } 
+        else{
+            course.clear();
+            for (String str : readCourses) {
+                course.add(str);
+            }
+            course.add(a);
+        }        
+        
+        try {
+            cc.writeTextFile(path, course);
+        } 
+        catch (IOException ex) {
+            System.out.println("");
+        }
+    }
+
+}
+
+
+
+
+ /*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Coursework;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author tm4375t
+ * 
+ */
+public class CourseworkItem extends CommonCode {
+    
+private CommonCode cc = new CommonCode();
+    ArrayList<String> course = new ArrayList<>();
+    String path = cc.appDir + "/Courses.txt";
+    AllNotes allnotes = new AllNotes();
+    
+    void writeCourseList(String a) {        
+        ArrayList<String> readCourses = new ArrayList<>();
+        readCourses = cc.readTextFile(cc.appDir + "/Courses.txt");  
+        if ("File not found".equals(readCourses.get(0))) {
+            System.out.println("File not found");
+        } 
+        else{
+            course.clear();
+            for (String str : readCourses) {
+                course.add(str);
+            }
+            course.add(a);
+        }        
+        
+        try {
+            cc.writeTextFile(path, course);
+        } 
+        catch (IOException ex) {
+            System.out.println("");
+        }
+    }
+
+}
